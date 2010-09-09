@@ -6,7 +6,7 @@ Requires at least: 2.9.2
 Tested up to: 0.01
 Stable tag: 0.01
 
-Get Post Image is a wrapper for Get The Image WordPress Plugin and phpThumb library. It manages to easily get and convert an image from a post, and can be used for thumbnailing, formatting, masks, logo insertion and a lot of other operations related to images.
+Get Post Image is a wrapper for Get The Image WordPress Plugin and phpThumb library. It manages to easily get and convert an images from posts.
 
 == Description ==
 
