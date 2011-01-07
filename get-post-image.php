@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Get Post Image
-Version: 0.02
+Version: 0.03
 Description: Get Post Image is a wrapper for Get The Image Plugin and phpThumb library. It manages to easily get and convert an image from a post, and can be used for thumbnailing, formatting, masks, logo insertion and a lot of other operations related to images.
 Author: Vinicius Massuchetto
 Plugin URI: http://wordpress.org/extend/plugins/get-post-image/
@@ -10,7 +10,7 @@ Plugin URI: http://wordpress.org/extend/plugins/get-post-image/
 /* Settings */
 
 define ('GPI_HIGHT_SECURITY_PASSWORD', 'anypasswordhere');
-define ('GPI_DEFAULT_IMAGE', get_bloginfo('stylesheet_directory') .'/img/avatar.jpg');
+define ('GPI_DEFAULT_IMAGE', 'your-img-url-here');
 
 /* Code */
 
@@ -65,10 +65,10 @@ function get_post_image ($args) {
 		$img = get_the_image ($options);
 	}
 	$img = ($img['url']) ? $img['url'] : $args['img'];
-
+	
 	if (!$args['phpthumb'])
 		return $img;
-
+	
 	$img = get_phpthumb ($args['phpthumb'], $img);
 
 	if (!$img && is_multisite())
@@ -91,7 +91,7 @@ function get_phpthumb ($args, $img, $url2path = true) {
 	if ($url2path)
 		$img = url2path ($img);
 
-	if (@!is_file($img))
+	if (@!is_file($img)) 
 		$img = GPI_DEFAULT_IMAGE;
 
 	$phpthumb .= '?src='.urlencode($img).'&'.$args;
@@ -104,17 +104,18 @@ function url2path ($url) {
 
 	if (!is_string($url))
 		return false;
-
+		
 	$url = parse_url ($url);
 
 	if (is_multisite()) {
 		global $blog_id;
 		$upload = wp_upload_dir();
-		$path = preg_replace ('/.*\/files\//', $upload['basedir'].'/', $url['path'], -1, $replaced);
+		$upload['basedir'] = addslashes($upload['basedir']);
+		$path = preg_filter ('/.*\/files\//', $upload['basedir'].'/', $url['path'], -1, $replaced);
 		if ($replaced)
 			return $path;
 		else
-            return preg_replace ('/.*wp-content/', ABSPATH.'/wp-content', $url['path']);
+			return preg_replace ('/.*wp-content/', ABSPATH.'/wp-content', $url['path']);	
 	}
 
 	return $_SERVER['DOCUMENT_ROOT'].$url['path'];
