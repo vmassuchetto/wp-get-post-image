@@ -3,8 +3,8 @@ Contributors: viniciusandre
 Donate link: http://vinicius.soylocoporti.org.br
 Tags: images, convert, phpthumb, gd
 Requires at least: 2.9.2
-Tested up to: 3.0.1
-Stable tag: 0.02
+Tested up to: 3.1
+Stable tag: 0.03
 
 Get Post Image is a wrapper for Get The Image WordPress Plugin and phpThumb library. It manages to easily get and convert an images from posts.
 
@@ -31,6 +31,10 @@ Visit http://vinicius.soylocoporti.org.br/get-post-image-wordpress-plugin/ to se
 Visit http://vinicius.soylocoporti.org.br/get-post-image-wordpress-plugin/ for live examples.
 
 == Changelog ==
+
+= 0.03 =
+
+* Minor changes to make it work properly on Windows servers
 
 = 0.02 =
 
