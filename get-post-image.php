@@ -1,9 +1,10 @@
 <?php
 /*
 Plugin Name: Get Post Image
-Version: 0.03
+Version: 0.04
 Description: Get Post Image is a wrapper for Get The Image Plugin and phpThumb library. It manages to easily get and convert an image from a post, and can be used for thumbnailing, formatting, masks, logo insertion and a lot of other operations related to images.
 Author: Vinicius Massuchetto
+Contributors: viniciusmassuchetto
 Plugin URI: http://wordpress.org/extend/plugins/get-post-image/
 */
 
@@ -18,16 +19,27 @@ define ('GPI_DEFAULT_IMAGE', 'your-img-url-here');
  * @brief Get formatted image from posts
  * @param $args Array of options. See comments.
  */
-function get_post_image ($args) {
+function get_post_image ($args = false) {
 	global $post;
+    $errorstyle = 'background:#FFA3A3; margin:10px; padding:10px; border:1px solid #FF0000;';
     
     if (!function_exists('get_the_image')) {
-        _e('The "<a href="http://wordpress.org/extend/plugins/get-the-image/">Get the Image</a>" plugin is required but is not installed. Please install it before activating "Get Post Image".<br/><br/>Go back <a href="javascript:history.back()">here</a>.');
+        ?>
+        <div style="<?php echo $errorstyle; ?>">
+            <?php _e('Error: You also need the "<a href="http://wordpress.org/extend/plugins/get-the-image/">Get The Image</a>" plugin to use Get Post Image.'); ?>
+        </div>
+        <?php
         return;
     }
 
-	if (!$args)
-		return false;
+	if (!$args) {
+        ?>
+        <div style="<?php echo $errorstyle; ?>">
+            <?php _e('Error: You need to pass <a href="http://vinicius.soylocoporti.org.br/get-post-image-wordpress-plugin/">some arguments</a> to the get_post_image() call.'); ?>
+        </div>
+        <?php
+        return;
+    }
 
 	if (is_string ($args)) {
 		$args = array (
@@ -37,8 +49,8 @@ function get_post_image ($args) {
 	}
 	
 	$defaults = array (
-		'phpthumb'      => false,  // phpThumb arguments to use. See http://phpthumb.sourceforge.net/demo/docs/phpthumb.readme.txt
-                                   // Will return the original full size image if not set.
+        // phpThumb arguments to use. See http://phpthumb.sourceforge.net/demo/docs/phpthumb.readme.txt
+		'phpthumb'      => false,  // Will return the original full size image if not set.
 		'default_image' => false,  // Will use this URL if nothing is found.
 		'image'         => false,  // Do not search for images, get the phpThumb string for this URL instead.
 		'post_id'       => false,  // Get image from specific post ID, not the current post in the loop. Preceded by the 'image' option.

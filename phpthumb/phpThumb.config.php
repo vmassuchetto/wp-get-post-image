@@ -133,7 +133,6 @@ if (strtoupper(substr(PHP_OS, 0, 3)) == 'WIN') {
 }
 
 
-
 // * Default output configuration:
 $PHPTHUMB_CONFIG['output_format']    = 'jpeg'; // default output format ('jpeg', 'png' or 'gif') - thumbnail will be output in this format (if available in your version of GD or ImageMagick). This is only used if the "f" parameter is not specified, and if the thumbnail can't be output in the input format.
 $PHPTHUMB_CONFIG['output_maxwidth']  = 0;      // default maximum thumbnail width.  If this is zero then default width  is the width  of the source image. This is always overridden by ?w=___ GETstring parameter
@@ -196,8 +195,6 @@ $PHPTHUMB_CONFIG['high_security_enabled']    = false;  // if enabled, requires '
 $PHPTHUMB_CONFIG['disable_debug']            = false;  // prevent phpThumb from displaying any information about your system. If true, phpThumbDebug and error messages will be disabled
 $PHPTHUMB_CONFIG['allow_src_above_docroot']  = false;  // if true, allow src to be anywhere in filesystem; if false (default) only allow src within document_root
 $PHPTHUMB_CONFIG['allow_src_above_phpthumb'] = true;   // if true (default), allow src to be anywhere in filesystem; if false only allow src within sub-directory of phpThumb installation
-$PHPTHUMB_CONFIG['allow_parameter_file']     = false;  // if true, allow use of 'file' parameter; if false (default) the 'file' parameter is disabled/ignored
-$PHPTHUMB_CONFIG['allow_parameter_goto']     = false;  // if true, allow use of 'goto' parameter; if false (default) the 'goto' parameter is disabled/ignored
 
 
 // * HTTP UserAgent configuration
