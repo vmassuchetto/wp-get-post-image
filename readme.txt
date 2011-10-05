@@ -12,36 +12,32 @@ Get Post Image is a wrapper for Get The Image WordPress Plugin and phpThumb libr
 
 Get Post Image is a wrapper for Get The Image WordPress Plugin and phpThumb library. It manages to easily get and convert an image from a post, and can be used for thumbnailing, formatting, masks, logo insertion and a lot of other operations related to images.
 
-Please visit http://vinicius.soylocoporti.org.br/get-post-image-wordpress-plugin/ for usage and more information.
+Please visit <a href="http://vinicius.soylocoporti.org.br/get-post-image-wordpress-plugin/">the plugin page</a> for configuration, usage, examples and more information.
 
-<b>Warning</b>: phpThumb bundled on Get Post Image versions <= 0.03 have a <a href="http://snipper.ru/view/8/phpthumb-179-arbitrary-command-execution-exploit/">severe security issue</a>. Don't use it.
+<strong>Warning</strong>: phpThumb bundled on Get Post Image versions <= 0.03 have a <a href="http://snipper.ru/view/8/phpthumb-179-arbitrary-command-execution-exploit/">severe security issue</a>. Please update your version to at least 0.04.
 
 == Installation ==
 
-1. Download and activate the Get The Image Plugin.
-2. Download and activate the Get Post Image Plugin.
-3. Configure phpThumb on get-post-image/phpthumb
-
-Visit <a href="http://vinicius.soylocoporti.org.br/get-post-image-wordpress-plugin/">the plugin page</a> for configuration, usage, examples and more information.
+Please visit <a href="http://vinicius.soylocoporti.org.br/get-post-image-wordpress-plugin/">the plugin page</a> for configuration, usage, examples and more information.
 
 == Frequently Asked Questions ==
 
-Please visit <a href="http://vinicius.soylocoporti.org.br/get-post-image-wordpress-plugin/">the plugin page</a>.
+Please visit <a href="http://vinicius.soylocoporti.org.br/get-post-image-wordpress-plugin/">the plugin page</a> for configuration, usage, examples and more information.
 
 == Screenshots ==
 
-Please visit <a href="http://vinicius.soylocoporti.org.br/get-post-image-wordpress-plugin/">the plugin page</a> for examples.
+Please visit <a href="http://vinicius.soylocoporti.org.br/get-post-image-wordpress-plugin/">the plugin page</a> for configuration, usage, examples and more information.
 
 == Changelog ==
 
 = 0.04 =
 
-* phpThumb update to fix security issues.
+* phpThumb update to fix security issues;
 * Displaying nice error messages instead of breaking execution.
 
 = 0.03 =
 
-* Minor changes to make it work properly on Windows servers
+* Minor changes to make it work properly on Windows servers.
 
 = 0.02 =
 
@@ -50,4 +46,5 @@ Please visit <a href="http://vinicius.soylocoporti.org.br/get-post-image-wordpre
 * There's a verification to check if "get-the-image" is also installed.
 
 = 0.01 =
-Plugin released. Don't expect multisite to work.
+
+* Plugin released. Don't expect multisite to work.
