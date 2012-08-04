@@ -10,7 +10,7 @@ Get Post Image is a wrapper for the phpThumb library, an inline image converter.
 
 == Description ==
 
-Get Post Image is a wrapper for the phpThumb library, an inline image converter. It manages to easily get and convert an image from a post, and can be used for thumbnailing, formatting, masks, logo insertion and a lot of other advanced operations.
+With Get Post Image you can easily resize, adjust, flip, and make a lot of operations in the uploaded images. Users can't actually make HTTP request to generate the images because phpThumb was adjusted to allow only WordPress to do it. The image will be saved in the same directory of the converted image, and will never be processed again.
 
 For example, to display a post thumbnail in a 200x100 format, you can simply do:
 
