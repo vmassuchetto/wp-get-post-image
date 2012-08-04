@@ -1,157 +1,183 @@
 <?php
 /*
-Plugin Name: Get Post Image
-Version: 0.04
-Description: Get Post Image is a wrapper for Get The Image Plugin and phpThumb library. It manages to easily get and convert an image from a post, and can be used for thumbnailing, formatting, masks, logo insertion and a lot of other operations related to images.
-Author: Vinicius Massuchetto
-Contributors: viniciusmassuchetto
-Plugin URI: http://wordpress.org/extend/plugins/get-post-image/
+ * Plugin Name: Get Post Image
+ * Version: 0.05
+ * Description: Get Post Image is a wrapper for the phpThumb library. It manages to easily get and convert an image from a post, and can be used for thumbnailing, formatting, masks, logo insertion and a lot of other operations.
+ * Author: Vinicius Massuchetto
+ * Contributors: viniciusmassuchetto
+ * Plugin URI: http://vinicius.soylocoporti.org.br/get-post-image-wordpress-plugin/
 */
 
-/* Settings */
+add_theme_support ('post-thumbnails');
+$gpi = array(
+    'phpthumb_url' => plugins_url('get-post-image') . '/phpthumb/phpThumb.php',
+    'phpthumb_default_args' => 'w=100&h=100&zc=1'
+);
 
-define ('GPI_HIGHT_SECURITY_PASSWORD', 'anypasswordhere');
-define ('GPI_DEFAULT_IMAGE', 'your-img-url-here');
-
-/* Code */
-
-/**
- * @brief Get formatted image from posts
- * @param $args Array of options. See comments.
- */
 function get_post_image ($args = false) {
-	global $post;
-    $errorstyle = 'background:#FFA3A3; margin:10px; padding:10px; border:1px solid #FF0000;';
-    
-    if (!function_exists('get_the_image')) {
-        ?>
-        <div style="<?php echo $errorstyle; ?>">
-            <?php _e('Error: You also need the "<a href="http://wordpress.org/extend/plugins/get-the-image/">Get The Image</a>" plugin to use Get Post Image.'); ?>
-        </div>
-        <?php
-        return;
-    }
 
-	if (!$args) {
-        ?>
-        <div style="<?php echo $errorstyle; ?>">
-            <?php _e('Error: You need to pass <a href="http://vinicius.soylocoporti.org.br/get-post-image-wordpress-plugin/">some arguments</a> to the get_post_image() call.'); ?>
-        </div>
-        <?php
-        return;
-    }
+    global $post, $gpi;
 
-	if (is_string ($args)) {
+    if (!$args)
+        $args = $gpi['phpthumb_default_args'];
+
+	if (is_string ($args))
 		$args = array (
 			'phpthumb' => $args,
 			'echo' => true
 		);
-	}
-	
+
 	$defaults = array (
-        // phpThumb arguments to use. See http://phpthumb.sourceforge.net/demo/docs/phpthumb.readme.txt
-		'phpthumb'      => false,  // Will return the original full size image if not set.
-		'default_image' => false,  // Will use this URL if nothing is found.
-		'image'         => false,  // Do not search for images, get the phpThumb string for this URL instead.
-		'post_id'       => false,  // Get image from specific post ID, not the current post in the loop. Preceded by the 'image' option.
-		'echo'          => true,   // Will echo a complete HTML image tag if true, or will just return the img's URL if false.
-		'extra'			=> false   // Extra attributes for your img object like. Will remove the default "alt" and put the ones specified.
+		'phpthumb' => $gpi['phpthumb_default_args'],
+		'echo' => true,
+        'class' => false,
+        'post_id' => ($post->ID) ? $post->ID : false,
+        'image_id' => false,
+        'shortcode' => false,
 	);
+	$args = wp_parse_args($args, $defaults);
 
-	$args = array_merge ($defaults, $args);
-	
-	if (!$args['default_image'] && GPI_DEFAULT_IMAGE)
-		$args['default_image'] = GPI_DEFAULT_IMAGE;
+    if ($args['image_id']) {
+        $p = get_post($i = $args['image_id']);
+        $args['post_id'] = $p->post_parent;
 
-	if ($args['post_id'] && ($post = get_post ($args['post_id'])))
-		setup_postdata ($post);
+    } else if (!$args['post_id']) {
+        return false;
 
-	if (!$args['image']) {
-		$options = array (
-			'image_scan' => true,
-			'echo' => false,
-			'format' => 'array',
-			'default_size' => 'full',
-			'default_image' => $args['default_image']
-		);
-		$img = get_the_image ($options);
-	}
-	$img = ($img['url']) ? $img['url'] : $args['img'];
-	
-	if (!$args['phpthumb'])
-		return $img;
-	
-	$img = get_phpthumb ($args['phpthumb'], $img);
+    }
 
-	if (!$img && is_multisite())
-		$img = get_user_avatar ($args['phpthumb'], $post->post_author);
-	
-	if ($args['echo']) {
-		$extra = ($args['extra']) ? $args['extra'] : 'alt="'.$post->post_title.'"';
-		echo '<img src="'.$img.'" '.$extra.' />';
-	} else
-		return $img;
+    if (!$args['image_id'])
+        if (!$args['image_id'] = gpi_find_image_id($args['post_id']))
+            return false;
+
+    if ($args['shortcode'])
+        $args['phpthumb'] = html_entity_decode($args['phpthumb']);
+
+    if (!$img = gpi_get_phpthumb($args))
+        return false;
+
+    if (!$args['echo'])
+        return $img;
+
+    $img_post = get_post($i = $args['image_id']);
+
+    if (!$args['class'])
+        $args['class'] = 'gpi-img gpi-img-' . $img_post->ID;
+
+    echo '<img src="' . $img .
+        '" class="' . $args['class'] .
+        '" alt="' . $post->post_title . '" />';
+
+    return true;
+}
+
+function gpi_find_image_id($post_id) {
+    if (!$img_id = get_post_thumbnail_id ($post_id)) {
+        $attachments = get_children(array(
+            'post_parent' => $post_id,
+            'post_type' => 'attachment',
+            'numberposts' => 1,
+            'post_mime_type' => 'image'
+        ));
+        if (is_array($attachments)) foreach ($attachments as $a)
+            $img_id = $a->ID;
+    }
+    if ($img_id)
+        return $img_id;
+    return false;
+}
+
+function gpi_get_phpthumb ($args) {
+
+    global $post, $gpi, $gpi_config;
+
+    require_once(plugin_dir_path(__FILE__) . '/get-post-image-config.php');
+
+    /* Parse phpThumb args */
+
+    $args_phpthumb = explode('&', $args['phpthumb']);
+    $args_array = array();
+    foreach ($args_phpthumb as $arg) {
+        $a = explode('=', $arg);
+        $args_keys[$a[0]] = rawurlencode($a[1]);
+        $args_array[] = $a[0] . '=' . rawurlencode($a[1]);;
+    }
+
+    /* Rebuild arguments due to params ordering */
+
+    ksort($args_array);
+    $args_phpthumb = implode('&', $args_array);
+    $args_str = implode('', $args_array);
+    $args_slug = preg_replace('/[^A-Za-z0-9]/', '', $args_str);
+
+    /* Get image to be converted */
+
+    $img = wp_get_attachment_metadata($args['image_id']);
+    $upload_dir = wp_upload_dir();
+    $file = $upload_dir['basedir'] . '/' . $img['file'];
+    if (!is_file($file))
+        return false;
+
+    /* Get image destination */
+
+    preg_match('/^(.*)\/(.*)\.(jpg|jpeg|png|gif)$/i', $file, $matches);
+    $ext = (in_array('f', array_keys($args_keys))) ? $args_keys['f'] : $matches[3];
+    $converted_file = $matches[1] . '/' . $matches[2] . '-gpi-' . $args_slug . '.' . $ext;
+
+    /* Convert if not converted */
+
+    if (!is_file($converted_file) || $gpi_config['debug']) {
+
+        $query_string = 'src=' . $file . '&' . $args_phpthumb;
+        $hash = md5($query_string . $gpi_config['security_password']);
+        $query_url = $gpi['phpthumb_url'] . '?' . $query_string . '&hash=' . $hash;
+
+        if (!$img = @file_get_contents($query_url))
+            return false;
+
+        @file_put_contents($converted_file, $img, LOCK_EX);
+
+    }
+
+    /* Serve it */
+
+    $converted_file_url = $upload_dir['url'] . '/' . $matches[2] . '-gpi-' . $args_slug . '.' . $ext;
+    return $converted_file_url;
+}
+
+function gpi_convert($args) {
+
+    global $gpi;
+    require_once($gpi['phpthumb_url']);
+
+    $output = $args['out'];
+    unset($args['out']);
+
+    $pt = new phpThumb();
+    $pt->getimagesizeinfo = @GetImageSize($args['src']);
+
+    foreach ($args as $k => $v)
+        $pt->setParameter($k, $v);
+    $pt->RenderToFile($output);
+    print_r($pt->debugmessages);
+
 
 }
 
-function get_phpthumb ($args, $img, $url2path = true) {
-	global $post;
-	require_once WP_PLUGIN_DIR.'/get-post-image/phpthumb/phpThumb.config.php';
-	$phpthumb = WP_PLUGIN_URL.'/get-post-image/phpthumb/phpThumb.php';
-	$PHPTHUMB_CONFIG['high_security_password'] = GPI_HIGHT_SECURITY_PASSWORD;
+/* Shortcode */
 
-	if ($url2path)
-		$img = url2path ($img);
+add_shortcode ('get-post-image', 'get_post_image_shortcode');
+function get_post_image_shortcode($args) {
 
-	if (@!is_file($img)) 
-		$img = GPI_DEFAULT_IMAGE;
+    if (is_array($args))
+        $args['shortcode'] = true;
+    else
+        $args = array('shortcode' => true);
 
-	$phpthumb .= '?src='.urlencode($img).'&'.$args;
-	$hash = md5 ($phpthumb.$PHPTHUMB_CONFIG['high_security_password']);
-	$phpthumb .= '&hash='.$hash;
-	return $phpthumb;
+    $args['echo'] = true;
+
+    get_post_image($args);
 }
 
-function url2path ($url) {
-
-	if (!is_string($url))
-		return false;
-		
-	$url = parse_url ($url);
-
-	if (is_multisite()) {
-		global $blog_id;
-		$upload = wp_upload_dir();
-		$upload['basedir'] = addslashes($upload['basedir']);
-		$path = preg_filter ('/.*\/files\//', $upload['basedir'].'/', $url['path'], -1, $replaced);
-		if ($replaced)
-			return $path;
-		else
-			return preg_replace ('/.*wp-content/', ABSPATH.'/wp-content', $url['path']);	
-	}
-
-	return $_SERVER['DOCUMENT_ROOT'].$url['path'];
-}
-
-function get_user_avatar ($args, $user) {
-	
-	if (!is_int($user))
-		$id = get_user_id_from_string ($user);
-	else
-		$id = $user;
-
-	$avatar_dir = ABSPATH.'wp-content/blogs.dir/1/files/avatars/'.$id.'/';
-	$img = GPI_DEFAULT_IMAGE;
-	if (@$dir = opendir ($avatar_dir)) {
-		while ($f = readdir($dir)) {
-			if (strpos ($f, 'bpfull') !== false) {
-				$img = $avatar_dir.$f;
-				break;
-			}
-		}
-	}
-	
-	return get_phpthumb ($args, $img, false);
-}
 
 ?>

@@ -182,7 +182,7 @@ if (!empty($PHPTHUMB_CONFIG['high_security_enabled'])) {
 		$phpThumb->ErrorImage('ERROR: $PHPTHUMB_CONFIG[high_security_password] is not complex enough');
 	} elseif ($_GET['hash'] != md5(str_replace('&hash='.$_GET['hash'], '', $_SERVER['QUERY_STRING']).$PHPTHUMB_CONFIG['high_security_password'])) {
 		sleep(10); // deliberate delay to discourage password-guessing
-		$phpThumb->config_disable_debug = false; // otherwise error message won't print
+        $phpThumb->config_disable_debug = false; // otherwise error message won't print
 		$phpThumb->ErrorImage('ERROR: invalid hash');
 	}
 }

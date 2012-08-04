@@ -3,22 +3,37 @@ Contributors: viniciusandre
 Donate link: http://vinicius.soylocoporti.org.br
 Tags: images, convert, phpthumb, gd
 Requires at least: 2.9.2
-Tested up to: 3.1
-Stable tag: 0.04
+Tested up to: 3.4.1
+Stable tag: 0.05
 
-Get Post Image is a wrapper for Get The Image WordPress Plugin and phpThumb library. It manages to easily get and convert an images from posts.
+Get Post Image is a wrapper for the phpThumb library, an inline image converter. It manages to easily get and convert an image from a post, and can be used for thumbnailing, formatting, masks, logo insertion and a lot of other advanced operations.
 
 == Description ==
 
-Get Post Image is a wrapper for Get The Image WordPress Plugin and phpThumb library. It manages to easily get and convert an image from a post, and can be used for thumbnailing, formatting, masks, logo insertion and a lot of other operations related to images.
+Get Post Image is a wrapper for the phpThumb library, an inline image converter. It manages to easily get and convert an image from a post, and can be used for thumbnailing, formatting, masks, logo insertion and a lot of other advanced operations.
 
-Please visit <a href="http://vinicius.soylocoporti.org.br/get-post-image-wordpress-plugin/">the plugin page</a> for configuration, usage, examples and more information.
+For example, to display a post thumbnail in a 200x100 format, you can simply do:
 
-<strong>Warning</strong>: phpThumb bundled on Get Post Image versions <= 0.03 have a <a href="http://snipper.ru/view/8/phpthumb-179-arbitrary-command-execution-exploit/">severe security issue</a>. Please update your version to at least 0.04.
+<code><?php get_post_image('w=200&h=100'); ?></code>
+
+Or as a shortcode in the post content:
+
+<code>[get-post-image phpthumb="w=200&h=100"]</code>
+
+If the picture is a little bit dark, you can increase brightness in 20% with:
+
+<code><?php get_post_image('w=200&zc=1&fltr[]=brit|20'); ?></code>
+
+And the shortcode:
+
+<code>[get-post-image phpthumb="w=200&zc=1&fltr&#91;&#93;=brit|20"]</code>
+
+There's many more options. Please visit <a href="http://vinicius.soylocoporti.org.br/get-post-image-wordpress-plugin/">the plugin page</a> for configuration, usage, examples and other information.
 
 == Installation ==
 
-Please visit <a href="http://vinicius.soylocoporti.org.br/get-post-image-wordpress-plugin/">the plugin page</a> for configuration, usage, examples and more information.
+1. Download and activate the Get Post Image Plugin.
+2. Change the default password in the get-post-image-config.php file.
 
 == Frequently Asked Questions ==
 
@@ -26,9 +41,45 @@ Please visit <a href="http://vinicius.soylocoporti.org.br/get-post-image-wordpre
 
 == Screenshots ==
 
-Please visit <a href="http://vinicius.soylocoporti.org.br/get-post-image-wordpress-plugin/">the plugin page</a> for configuration, usage, examples and more information.
+Original image:
+
+<img src="http://vinicius.soylocoporti.org.br/files/2010/09/camel.jpg" />
+
+<code><?php get_post_image ('w=300&h=300'); ?></code>
+
+<img src="http://vinicius.soylocoporti.org.br/files/2010/09/camel-300x300.jpeg" />
+
+<code><?php get_post_image ('w=200&zc=1&fltr[]=brit|20'); ?></code>
+
+<img src="http://vinicius.soylocoporti.org.br/files/2010/09/camel-brit20.jpeg" />
+
+<?php get_post_image ('w=200&zc=1&fltr[]=flip|y'); ?>
+
+<img src="http://vinicius.soylocoporti.org.br/files/2010/09/camel-flipv.jpeg" />
+
+<code><?php get_post_image ('w=200&zc=1&fltr[]=wmt|I\\''m a Camel! &#169;|16|C|FFFFFF|' . STYLESHEETPATH . '/fonts/LiberationSans-Bold.ttf|100|10|0|000000|80|x'); ?></code>
+
+<img src="http://vinicius.soylocoporti.org.br/files/2010/09/camel-wmtc.jpeg" />
+
+<?php get_post_image ('w=200&zc=1&fltr[]=wmi|' . STYLESHEETPATH . '/images/camel-logo.png|T|50|5|5|320'); ?>
+
+<img src="http://vinicius.soylocoporti.org.br/files/2010/09/camel-wmi50.jpeg" />
+
+<code><?php get_post_image ('w=200&zc=1&fltr[]=mask|' . STYLESHEETPATH . '/images/camel-abstract.png&f=png'); ?></code>
+
+<img src="http://vinicius.soylocoporti.org.br/files/2010/09/camel-abstract.png" />
+
+<img src="http://vinicius.soylocoporti.org.br/files/2010/09/camel-maskform.png" />
+
 
 == Changelog ==
+
+= 0.05 =
+
+* Removing get_the_image dependency
+* Converting images on the server side
+* Adding the security password
+* Improving the calling method
 
 = 0.04 =
 
