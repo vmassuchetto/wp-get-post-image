@@ -22,21 +22,21 @@ Get Post Image can easily resize, adjust, flip, and make a lot of operations in 
 
 For example, to display a post thumbnail in a 200x100 format, you can simply do:
 
-<code><?php get_post_image('w=200&h=100'); ?></code>
+`get_post_image('w=200&h=100');`
 
 Or as a shortcode in the post content:
 
-<code>[get-post-image phpthumb="w=200&h=100"]</code>
+`[get-post-image phpthumb="w=200&h=100"]`
 
 If the picture is a little bit dark, you can increase brightness in 20% with:
 
-<code><?php get_post_image('w=200&zc=1&fltr[]=brit|20'); ?></code>
+`get_post_image('w=200&zc=1&fltr[]=brit|20');`
 
 And the shortcode:
 
-<code>[get-post-image phpthumb="w=200&zc=1&fltr&#91;&#93;=brit|20"]</code>
+`[get-post-image phpthumb="w=200&zc=1&fltr&#91;&#93;=brit|20"]`
 
-There's many more options. Please visit <a href="http://vinicius.soylocoporti.org.br/get-post-image-wordpress-plugin/">the plugin page</a> for configuration, usage, examples and other information.
+There's many more options. Please visit [the plugin page](http://vinicius.soylocoporti.org.br/get-post-image-wordpress-plugin) for configuration, usage, examples and other information.
 
 == Screenshots ==
 
