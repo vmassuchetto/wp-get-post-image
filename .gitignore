@@ -1,0 +1,7 @@
+# SVN
+.svn
+
+# Vim
+*~
+*.swp
+*.swo
