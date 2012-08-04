@@ -41,36 +41,14 @@ Please visit <a href="http://vinicius.soylocoporti.org.br/get-post-image-wordpre
 
 == Screenshots ==
 
-Original image:
-
-<img src="http://vinicius.soylocoporti.org.br/files/2010/09/camel.jpg" />
-
-<code><?php get_post_image ('w=300&h=300'); ?></code>
-
-<img src="http://vinicius.soylocoporti.org.br/files/2010/09/camel-300x300.jpeg" />
-
-<code><?php get_post_image ('w=200&zc=1&fltr[]=brit|20'); ?></code>
-
-<img src="http://vinicius.soylocoporti.org.br/files/2010/09/camel-brit20.jpeg" />
-
-<?php get_post_image ('w=200&zc=1&fltr[]=flip|y'); ?>
-
-<img src="http://vinicius.soylocoporti.org.br/files/2010/09/camel-flipv.jpeg" />
-
-<code><?php get_post_image ('w=200&zc=1&fltr[]=wmt|I\\''m a Camel! &#169;|16|C|FFFFFF|' . STYLESHEETPATH . '/fonts/LiberationSans-Bold.ttf|100|10|0|000000|80|x'); ?></code>
-
-<img src="http://vinicius.soylocoporti.org.br/files/2010/09/camel-wmtc.jpeg" />
-
-<?php get_post_image ('w=200&zc=1&fltr[]=wmi|' . STYLESHEETPATH . '/images/camel-logo.png|T|50|5|5|320'); ?>
-
-<img src="http://vinicius.soylocoporti.org.br/files/2010/09/camel-wmi50.jpeg" />
-
-<code><?php get_post_image ('w=200&zc=1&fltr[]=mask|' . STYLESHEETPATH . '/images/camel-abstract.png&f=png'); ?></code>
-
-<img src="http://vinicius.soylocoporti.org.br/files/2010/09/camel-abstract.png" />
-
-<img src="http://vinicius.soylocoporti.org.br/files/2010/09/camel-maskform.png" />
-
+1. This is the original image.
+2. Resizing to 300x300px: `get_post_image ('w=300&h=300');`
+3. Adjusting brightness: `get_post_image ('w=200&zc=1&fltr[]=brit|20');`
+4. Flip vertically: `get_post_image ('w=200&zc=1&fltr[]=flip|y');`
+5. Text: `get_post_image ('w=200&zc=1&fltr[]=wmt|I\\''m a Camel! &#169;|16|C|FFFFFF|/path/to/liberation-sans.ttf|100|10|0|000000|80|x');`
+6. Watermak image: `get_post_image ('w=200&zc=1&fltr[]=wmi|/path/to/camel-logo.png|T|50|5|5|320');`
+7. Applying mask: `get_post_image ('w=200&zc=1&fltr[]=mask|/path/to/camel-abstract.png&f=png');`
+8. Mask applyed
 
 == Changelog ==
 
