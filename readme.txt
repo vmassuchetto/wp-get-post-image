@@ -1,4 +1,5 @@
-=== Plugin Name ===
+=== Get Post Image ===
+
 Contributors: viniciusmassuchetto
 Donate link: http://vinicius.soylocoporti.org.br
 Tags: images, convert, phpthumb, gd
@@ -6,11 +7,18 @@ Requires at least: 2.9.2
 Tested up to: 3.4.1
 Stable tag: 0.05
 
-Get Post Image is a wrapper for the phpThumb library, an inline image converter. It manages to easily get and convert an image from a post, and can be used for thumbnailing, formatting, masks, logo insertion and a lot of other advanced operations.
+Get Post Image allows you to easily get and convert an image from a post, it supports resizing, color corrections, masks and other advanced operations.
 
 == Description ==
 
-With Get Post Image you can easily resize, adjust, flip, and make a lot of operations in the uploaded images. Users can't actually make HTTP request to generate the images because phpThumb was adjusted to allow only WordPress to do it. The image will be saved in the same directory of the converted image, and will never be processed again.
+Get Post Image can easily resize, adjust, flip, and make a lot of operations in the uploaded images right into the code. Site visitors can't actually make HTTP requests to generate the images because phpThumb was adjusted to allow only WordPress to do it. The image will be saved in the same directory of the converted image and will never be processed again.
+
+== Installation ==
+
+1. Download and activate the Get Post Image Plugin.
+2. Change the default password in the get-post-image-config.php file.
+
+== Usage ==
 
 For example, to display a post thumbnail in a 200x100 format, you can simply do:
 
@@ -29,15 +37,6 @@ And the shortcode:
 <code>[get-post-image phpthumb="w=200&zc=1&fltr&#91;&#93;=brit|20"]</code>
 
 There's many more options. Please visit <a href="http://vinicius.soylocoporti.org.br/get-post-image-wordpress-plugin/">the plugin page</a> for configuration, usage, examples and other information.
-
-== Installation ==
-
-1. Download and activate the Get Post Image Plugin.
-2. Change the default password in the get-post-image-config.php file.
-
-== Frequently Asked Questions ==
-
-Please visit <a href="http://vinicius.soylocoporti.org.br/get-post-image-wordpress-plugin/">the plugin page</a> for configuration, usage, examples and more information.
 
 == Screenshots ==
 
