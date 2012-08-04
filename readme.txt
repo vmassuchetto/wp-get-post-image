@@ -1,5 +1,5 @@
 === Plugin Name ===
-Contributors: viniciusandre
+Contributors: viniciusmassuchetto
 Donate link: http://vinicius.soylocoporti.org.br
 Tags: images, convert, phpthumb, gd
 Requires at least: 2.9.2
