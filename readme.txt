@@ -6,6 +6,8 @@ Tags: images, convert, phpthumb, gd
 Requires at least: 2.9.2
 Tested up to: 3.4.1
 Stable tag: 0.05
+License: GPLv2
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Get Post Image allows you to easily get and convert an image from a post, it supports resizing, color corrections, masks and other advanced operations.
 
