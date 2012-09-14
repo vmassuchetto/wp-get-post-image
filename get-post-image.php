@@ -35,6 +35,7 @@ function get_post_image ($args = false) {
         'post_id' => ($post->ID) ? $post->ID : false,
         'image_id' => false,
         'shortcode' => false,
+        'size' => false
 	);
 	$args = wp_parse_args($args, $defaults);
 
@@ -113,9 +114,19 @@ function gpi_get_phpthumb ($args) {
 
     /* Get image to be converted */
 
-    $img_url = wp_get_attachment_url($args['image_id']);
-    $img_file = get_attached_file($args['image_id']);
-    $upload_dir = wp_upload_dir();
+    $img_url = false;
+    if ($args['size']) {
+        $img_url = wp_get_attachment_image_src($args['image_id'], $args['size']);
+        $img_url = (!is_wp_error($img_url)) ? $img_url[0] : false;
+    }
+    if (!$img_url)
+        $img_url = wp_get_attachment_image_src($args['image_id']);
+
+    if (!$img_url || is_wp_error($img_url))
+        return false;
+
+    $img_dir = dirname(get_attached_file($args['image_id']));
+    $img_file = $img_dir . '/' . basename($img_url);
     if (!is_file($img_file))
         return false;
 
@@ -142,7 +153,7 @@ function gpi_get_phpthumb ($args) {
 
     /* Serve it */
 
-    $converted_file_url = $upload_dir['url'] . '/' . $matches[2] . '-gpi-' . $args_slug . '.' . $ext;
+    $converted_file_url = dirname($img_url) . '/' . $matches[2] . '-gpi-' . $args_slug . '.' . $ext;
     return $converted_file_url;
 }
 
