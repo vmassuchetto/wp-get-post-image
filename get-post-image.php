@@ -112,15 +112,15 @@ function gpi_get_phpthumb ($args) {
 
     /* Get image to be converted */
 
-    $img = wp_get_attachment_metadata($args['image_id']);
+    $img_url = wp_get_attachment_url($args['image_id']);
+    $img_file = get_attached_file($args['image_id']);
     $upload_dir = wp_upload_dir();
-    $file = $upload_dir['basedir'] . '/' . $img['file'];
-    if (!is_file($file))
+    if (!is_file($img_file))
         return false;
 
     /* Get image destination */
 
-    preg_match('/^(.*)\/(.*)\.(jpg|jpeg|png|gif)$/i', $file, $matches);
+    preg_match('/^(.*)\/(.*)\.(jpg|jpeg|png|gif)$/i', $img_file, $matches);
     $ext = (in_array('f', array_keys($args_keys))) ? $args_keys['f'] : $matches[3];
     $converted_file = $matches[1] . '/' . $matches[2] . '-gpi-' . $args_slug . '.' . $ext;
 
@@ -128,14 +128,14 @@ function gpi_get_phpthumb ($args) {
 
     if (!is_file($converted_file) || $gpi_config['debug']) {
 
-        $query_string = 'src=' . $file . '&' . $args_phpthumb;
+        $query_string = 'src=' . $img_file . '&' . $args_phpthumb;
         $hash = md5($query_string . $gpi_config['security_password']);
         $query_url = $gpi['phpthumb_url'] . '?' . $query_string . '&hash=' . $hash;
 
-        if (!$img = @file_get_contents($query_url))
-            return false;
-
-        @file_put_contents($converted_file, $img, LOCK_EX);
+        $img = wp_remote_get($query_url);
+        if (200 == $img['response']['code']) {
+            @file_put_contents($converted_file, $img['body'], LOCK_EX);
+        }
 
     }
 
