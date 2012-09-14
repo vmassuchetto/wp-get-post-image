@@ -2,7 +2,7 @@
 /*
  * Plugin Name: Get Post Image
  * Description: Get Post Image is a wrapper for the phpThumb library. It manages to easily get and convert an image from a post, and can be used for thumbnailing, formatting, masks, logo insertion and a lot of other operations.
- * Version: 0.06
+ * Version: 0.07
  * Author: Vinicius Massuchetto
  * Author URI: http://vinicius.soylocoporti.org.br
  * Contributors: viniciusmassuchetto
