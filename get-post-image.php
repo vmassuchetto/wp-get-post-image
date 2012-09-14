@@ -129,7 +129,7 @@ function gpi_get_phpthumb ($args) {
         $img_url = (!is_wp_error($img_url)) ? $img_url[0] : false;
     }
     if (!$img_url) {
-        $img_url = wp_get_attachment_image_src($args['image_id']);
+        $img_url = wp_get_attachment_image_src($args['image_id'], 'full');
         $img_url = (!is_wp_error($img_url)) ? $img_url[0] : false;
     }
 
