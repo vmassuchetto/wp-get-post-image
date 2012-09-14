@@ -49,12 +49,13 @@ function get_post_image ($args = false) {
 
     }
 
-    if (!$args['image_id'])
+    if (!$args['image_id']) {
         if (!$args['image_id'] = gpi_find_image_id($args['post_id']))
             if ($args['default_image'])
                 $img = $args['default_image'];
             else
                 return false;
+    }
 
     if ($args['shortcode'])
         $args['phpthumb'] = html_entity_decode($args['phpthumb']);
@@ -69,7 +70,7 @@ function get_post_image ($args = false) {
     if (!$args['echo'])
         return $img;
 
-    $img_post = get_post($i = $args['image_id']);
+    $img_post = get_post($args['image_id']);
 
     if (!$args['class'])
         $args['class'] = 'gpi-img gpi-img-' . $img_post->ID;
@@ -127,8 +128,10 @@ function gpi_get_phpthumb ($args) {
         $img_url = wp_get_attachment_image_src($args['image_id'], $args['size']);
         $img_url = (!is_wp_error($img_url)) ? $img_url[0] : false;
     }
-    if (!$img_url)
+    if (!$img_url) {
         $img_url = wp_get_attachment_image_src($args['image_id']);
+        $img_url = (!is_wp_error($img_url)) ? $img_url[0] : false;
+    }
 
     if (!$img_url || is_wp_error($img_url))
         return false;
