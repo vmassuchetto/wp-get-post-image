@@ -35,7 +35,8 @@ function get_post_image ($args = false) {
         'post_id' => ($post->ID) ? $post->ID : false,
         'image_id' => false,
         'shortcode' => false,
-        'size' => false
+        'size' => false,
+        'default_image' => false
 	);
 	$args = wp_parse_args($args, $defaults);
 
@@ -50,13 +51,20 @@ function get_post_image ($args = false) {
 
     if (!$args['image_id'])
         if (!$args['image_id'] = gpi_find_image_id($args['post_id']))
-            return false;
+            if ($args['default_image'])
+                $img = $args['default_image'];
+            else
+                return false;
 
     if ($args['shortcode'])
         $args['phpthumb'] = html_entity_decode($args['phpthumb']);
 
-    if (!$img = gpi_get_phpthumb($args))
-        return false;
+    if (!$img = gpi_get_phpthumb($args)) {
+        if ($args['default_image'])
+            $img = $args['default_image'];
+        else
+            return false;
+    }
 
     if (!$args['echo'])
         return $img;
@@ -127,6 +135,7 @@ function gpi_get_phpthumb ($args) {
 
     $img_dir = dirname(get_attached_file($args['image_id']));
     $img_file = $img_dir . '/' . basename($img_url);
+
     if (!is_file($img_file))
         return false;
 
