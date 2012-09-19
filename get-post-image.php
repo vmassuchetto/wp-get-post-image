@@ -34,12 +34,13 @@ function get_post_image ($args = false) {
 	$defaults = array (
 		'phpthumb' => $gpi['phpthumb_default_args'],
 		'echo' => true,
-        'class' => false,
         'post_id' => (!empty($post->ID)) ? $post->ID : false,
         'image_id' => false,
         'shortcode' => false,
         'size' => false,
-        'default_image' => false
+        'default_image' => false,
+        'class' => false,
+        'alt' => false
 	);
 	$args = wp_parse_args($args, $defaults);
 
@@ -52,7 +53,7 @@ function get_post_image ($args = false) {
     } elseif (!$args['post_id'] && $args['image_id']) {
         if ($args['image_id'])
             $p = get_post($i = $args['image_id']);
-        if ($p->post_parent)
+        if (empty($p->post_parent))
             $args['post_id'] = $p->post_parent;
     }
 
@@ -71,16 +72,26 @@ function get_post_image ($args = false) {
 
     $img_post = get_post($args['image_id']);
 
-    if (!$args['class'])
-        $args['class'] = 'gpi-img gpi-img-' . $img_post->ID;
+    $class = $args['class'];
+    if (empty($class)) {
+        $class = 'gpi-img';
+        if (!empty($img_post->ID))
+            $class .= ' gpi-img-' . $img_post->ID;
+    }
 
-    $post_title = "";
-    if(!empty($post->post_title))
-    	$post_title = htmlspecialchars($post->post_title);
+    $alt = $args['alt'];
+    if(empty($alt)) {
+    	if (!empty($post->post_title))
+            $alt = htmlspecialchars($post->post_title);
+    }
 
-    echo '<img src="' . $img .
-        '" class="' . $args['class'] .
-        '" alt="' . $post_title . '" />';
+    $output = '<img src="' . $img . '"';
+    if (!empty($class))
+        $output .= ' class="' . $class . '"';
+    if (!empty($alt))
+        $output .= ' alt="' . $alt . '"';
+    $output .= ' />';
+    echo $output;
 
     return true;
 }
