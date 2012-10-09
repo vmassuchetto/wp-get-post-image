@@ -194,7 +194,7 @@ $PHPTHUMB_CONFIG['mysql_database'] = '';
 $PHPTHUMB_CONFIG['high_security_enabled'] = true;  // if enabled, requires 'high_security_password' set to at least 5 characters, and requires the use of phpThumbURL() function (at the bottom of phpThumb.config.php) to generate hashed URLs
 $PHPTHUMB_CONFIG['high_security_password'] = $gpi_config['security_password'];     // required if 'high_security_enabled' is true, must be at least 5 characters long
 $PHPTHUMB_CONFIG['disable_debug'] = false;  // prevent phpThumb from displaying any information about your system. If true, phpThumbDebug and error messages will be disabled
-$PHPTHUMB_CONFIG['allow_src_above_docroot']  = false;  // if true, allow src to be anywhere in filesystem; if false (default) only allow src within document_root
+$PHPTHUMB_CONFIG['allow_src_above_docroot']  = true;  // if true, allow src to be anywhere in filesystem; if false (default) only allow src within document_root
 $PHPTHUMB_CONFIG['allow_src_above_phpthumb'] = true;   // if true (default), allow src to be anywhere in filesystem; if false only allow src within sub-directory of phpThumb installation
 
 

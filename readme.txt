@@ -5,7 +5,7 @@ Donate link: http://vinicius.soylocoporti.org.br
 Tags: images, convert, phpthumb, gd
 Requires at least: 2.9.2
 Tested up to: 3.4.1
-Stable tag: 0.07
+Stable tag: 0.08
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -52,6 +52,18 @@ There's many more options. Please visit [the plugin page](http://vinicius.soyloc
 8. Mask applyed
 
 == Changelog ==
+
+= 0.08 =
+
+* Allow any location in filesystem for the image to be converted
+
+= 0.07 =
+
+* Adjusting rules to get the proper post_id
+
+= 0.06 =
+
+* Adjusting rules to get the proper image_id
 
 = 0.05 =
 
